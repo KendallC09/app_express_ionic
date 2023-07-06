@@ -29,20 +29,8 @@ const appPages: AppPage[] = [
     mdIcon: heartSharp
   },
   {
-    title: 'Crear Producto',
-    url: '/pages/CreateForm',
-    iosIcon: listCircleOutline,
-    mdIcon: listCircleOutline
-  },
-  {
-    title: 'Editar Producto',
-    url: '/pages/EditForm',
-    iosIcon: listCircleOutline,
-    mdIcon: listCircleOutline
-  },
-  {
-    title: 'Eliminar Producto',
-    url: '/pages/DeleteForm',
+    title: 'Registro',
+    url: '/pages/RegistrationForm',
     iosIcon: listCircleOutline,
     mdIcon: listCircleOutline
   }

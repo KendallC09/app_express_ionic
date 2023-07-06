@@ -3,9 +3,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import List from './pages/List';
-import EditForm from './pages/form/EditForm';
-import CreateForm from './pages/form/CreateForm';
-import DeleteForm from './pages/form/DeleteForm';
+import LoginForm from './pages/form/LoginForm';
+import RegistrationForm from './pages/form/RegistrationForm';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -26,35 +25,30 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
 setupIonicReact();
 
 const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/pages/List" />
-            </Route>
-            <Route path="/pages/List" exact={true}>
-              <List />
-            </Route>
-            <Route path="/pages/CreateForm" exact={true}>
-              <CreateForm />
-            </Route>
-            <Route path="/pages/EditForm" exact={true}>
-              <EditForm />
-            </Route>
-            <Route path="/pages/DeleteForm" exact={true}>
-              <DeleteForm />
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
+        <IonRouterOutlet id='main'>
+          <Route path="/" exact={true}>
+            <Redirect to="/pages/LoginForm" />
+          </Route>
+          <Route path="/pages/LoginForm" exact={true}>
+            <LoginForm />
+          </Route>
+          <Route path="/pages/RegistrationForm" exact={true}>
+            <RegistrationForm />
+          </Route>
+          <Route path="/pages/List/:clientId" exact={true}>
+            <List />
+          </Route>
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );
-};
+}
 
 export default App;

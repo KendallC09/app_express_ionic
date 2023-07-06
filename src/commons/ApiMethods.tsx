@@ -20,19 +20,34 @@ function ApiMethods(url : any) {
       .finally(() => {setLoading(false)})
   }, [url])
 
-  const postMethod = (name: any, price: any) => {
+  const postMethodOrder = (state: any, client_id: any) => {
     const config = {
       headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
+        "Accept": "application/json",
+        "Content-Type": "application/json"
       }
     }
 
     setLoading(true);
-    axios.post(url, { name: name, price: price }, config)
+    axios.post(url, { state: state, client_id: client_id }, config)
       .then((response) => { setData(response.data) })
-      .catch((err) => { setError(err)})
-      .finally(() => { setLoading(false)})
+      .catch((err) => { setError(err) })
+      .finally(() => { setLoading(false) })
+  }
+
+  const postMethodClient = (state: any, first_name: any, last_name: any, physical_address: any, email: any, password: any) => {
+    const config = {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    }
+
+    setLoading(true);
+    axios.post(url, {state: state, first_name: first_name, last_name: last_name, physical_address: physical_address, email: email, password: password, config})
+      .then((response) => { setData(response.data) })
+      .catch((err) => { setError(err) })
+      .finally(() => { setLoading(false) })
   }
 
   const putMethod = (id: any, name: any, price: any) => {
@@ -64,7 +79,7 @@ function ApiMethods(url : any) {
       .finally(() => {setLoading(false)})
   }
 
-  return {data, loading, error, postMethod, putMethod, deleteMethod}
+  return {data, loading, error, postMethodOrder, postMethodClient, putMethod, deleteMethod}
 
 }
 
