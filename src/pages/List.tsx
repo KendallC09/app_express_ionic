@@ -10,11 +10,14 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonButton
+  IonButton,
+  IonAlert,
+  IonSplitPane
 } from '@ionic/react';
 import ApiMethods from '../commons/ApiMethods';
 import { environment } from '../environments/environment.dev';
 import { useHistory, useParams } from 'react-router';
+import Menu from '../components/Menu';
 
 const List: React.FC = () => {
 
@@ -53,35 +56,42 @@ const List: React.FC = () => {
     }
   }
 
+  const showDish = async (e: React.FormEvent, dishId: any) => {
+    e.preventDefault();
+    {dishes?.map((dish: any) => {
+      if(dish.id == dishId){
+        alert(`${dish.description}\nPrecio: ${dish.price}`)
+      }
+    })}
+  }
+
   if (!dishes) {
     return <h1>Cargando...</h1>
   } else {
     return (
       <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>
-              Menú
-            </IonTitle>
+        <IonSplitPane>
+          <Menu />
+          <IonContent>
+            {dishes?.map((dish: any) => {
+              if(dish.state == "available") {
+                return (
+                  <IonCard className='IonCard' style={{ marginRight: '100px' }}>
+                    <IonCardHeader>
+                      <IonTitle className='IonCardTitle'>{dish.name}</IonTitle>
+                      <IonCardSubtitle className='IonCardSubtitle'>Precio: {dish.price}</IonCardSubtitle>
+                      <IonButton onClick={(e) => showDish(e, dish.id)}>Descripción</IonButton>
+                      <IonButton onClick={(e) => addDishToOrder(e, dish.id)}>Agregar al pedido</IonButton>
+                    </IonCardHeader>
+                  </IonCard>
+                )
+              }
+            })}
+            <IonButton>Ver Orden</IonButton>
+            <IonButton>Enviar Orden</IonButton>
             <IonButton onClick={handleLogout}>Cerrar Sesión</IonButton>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          {dishes?.map((dish: any) => {
-            if(dish.state == "available") {
-              return (
-                <IonCard className='IonCard'>
-                  <IonCardHeader>
-                    <IonTitle className='IonCardTitle'>Nombre: {dish.name}</IonTitle>
-                    <IonCardSubtitle className='IonCardSubtitle'>Precio: {dish.price}</IonCardSubtitle>
-                    <IonButton>Descripción</IonButton>
-                    <IonButton onClick={(e) => addDishToOrder(e, dish.id)}>Agregar al pedido</IonButton>
-                  </IonCardHeader>
-                </IonCard>
-              )
-            }
-          })}
-        </IonContent>
+          </IonContent>
+        </IonSplitPane>
       </IonPage>
     )
   }

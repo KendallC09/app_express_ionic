@@ -23,14 +23,14 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Lista Principal',
+    title: 'Menú',
     url: '/pages/List',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
   {
-    title: 'Registro',
-    url: '/pages/RegistrationForm',
+    title: 'Editar Datos Personales',
+    url: '/pages/EditClientForm',
     iosIcon: listCircleOutline,
     mdIcon: listCircleOutline
   }
