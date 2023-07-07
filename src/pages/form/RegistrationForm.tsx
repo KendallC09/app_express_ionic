@@ -14,21 +14,34 @@ const RegistrationForm: React.FC = () => {
   const [message, setMessage] = useState('');
   const history = useHistory();
 
-  const { postMethodClient } = ApiMethods(`${environment.apiEndPoint}/api/clients`);
+  const { postMethod } = ApiMethods(`${environment.apiEndPoint}/api/clients`);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => { //validar si no se crea bien
     e.preventDefault();
-    postMethodClient(0, firstName, lastName, physicalAddress, email, password);
+    const body = {
+      state: 0,
+      first_name: firstName,
+      last_name: lastName,
+      physical_address: physicalAddress,
+      email: email,
+      password: password
+    }
+    postMethod(body);
     setMessage('Registro Completado!');
-
-    history.push('/pages/LoginForm');
-    window.location.reload
-
     setFirstName('');
     setLastName('');
     setPhysicalAddress('');
     setEmail('');
     setPassword('');
+
+    history.push('/pages/LoginForm');
+    window.location.reload();
+
+  }
+
+  const handleLogin = () => {
+    history.push('/pages/LoginForm');
+    window.location.reload()
   }
 
   return (
@@ -80,6 +93,7 @@ const RegistrationForm: React.FC = () => {
           <IonButton expand="full" type="submit" style={{marginTop: '20px'}}>
             Registrarse
           </IonButton>
+          <IonButton onClick={handleLogin} expand="full" style={{ marginTop: '20px' }}>Volver</IonButton>
         </form>
       </IonContent>
     </IonPage>

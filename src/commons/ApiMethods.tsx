@@ -20,7 +20,7 @@ function ApiMethods(url : any) {
       .finally(() => {setLoading(false)})
   }, [url])
 
-  const postMethodOrder = (state: any, client_id: any) => {
+  const postMethod = (body: any) => {
     const config = {
       headers: {
         "Accept": "application/json",
@@ -29,13 +29,13 @@ function ApiMethods(url : any) {
     }
 
     setLoading(true);
-    axios.post(url, { state: state, client_id: client_id }, config)
+    axios.post(url, body, config)
       .then((response) => { setData(response.data) })
       .catch((err) => { setError(err) })
       .finally(() => { setLoading(false) })
   }
 
-  const postMethodClient = (state: any, first_name: any, last_name: any, physical_address: any, email: any, password: any) => {
+  const putMethod = (id: number, body: any) => {
     const config = {
       headers: {
         "Accept": "application/json",
@@ -44,22 +44,7 @@ function ApiMethods(url : any) {
     }
 
     setLoading(true);
-    axios.post(url, {state: state, first_name: first_name, last_name: last_name, physical_address: physical_address, email: email, password: password, config})
-      .then((response) => { setData(response.data) })
-      .catch((err) => { setError(err) })
-      .finally(() => { setLoading(false) })
-  }
-
-  const putMethod = (id: any, name: any, price: any) => {
-    const config = {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      }
-    }
-
-    setLoading(true);
-    axios.put(`${url}/${id}`, {name: name, price: price}, config)
+    axios.put(`${url}/${id}`, body, config)
       .then((response) => {setData(response.data)})
       .catch((err) => {setError(err)})
       .finally(() => {setLoading(false)})
@@ -79,7 +64,7 @@ function ApiMethods(url : any) {
       .finally(() => {setLoading(false)})
   }
 
-  return {data, loading, error, postMethodOrder, postMethodClient, putMethod, deleteMethod}
+  return {data, loading, error, postMethod, putMethod, deleteMethod}
 
 }
 
