@@ -17,22 +17,43 @@ import { environment } from '../environments/environment.dev';
 import { useHistory, useParams } from 'react-router';
 
 const List: React.FC = () => {
+
   const history = useHistory();
-  
-  const {data, refetch} = ApiMethods(`${environment.apiEndPoint}/api/dishes`);
-  
+  const { data: dishes } = ApiMethods(`${environment.apiEndPoint}/api/dishes`);
+  const { data: orders } = ApiMethods(`${environment.apiEndPoint}/api/orders`);
+  const { postMethod: postDishes } = ApiMethods(`${environment.apiEndPoint}/api/order_dishes`);
+
   const {clientId} = useParams<{ clientId: any}>();
 
-  const { deleteMethod } = ApiMethods(`${environment.apiEndPoint}/api/orders`);
 
   const handleLogout = (e: React.FormEvent) => {
     e.preventDefault();
 
     history.push('/pages/LoginForm')
-    window.location.reload
+    window.location.reload();
   }
 
-  if (!data) {
+  const addDishToOrder = async (e: React.FormEvent, dishId: any) => {
+    e.preventDefault();
+    if (!orders) {
+      alert("No hay ordenes")
+    } else {
+      {
+        orders?.map((order: any) => {
+          if (order.client.id == clientId) {
+           const body = {
+            state: 0,//si se envia en 0 la orden aun no esta lista
+            order_id: order.id,
+            dish_id: dishId}
+            postDishes(body);
+            alert("Se agregó exitosamente")
+          }
+        })
+      }
+    }
+  }
+
+  if (!dishes) {
     return <h1>Cargando...</h1>
   } else {
     return (
@@ -46,7 +67,7 @@ const List: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          {data?.map((dish: any) => {
+          {dishes?.map((dish: any) => {
             if(dish.state == "available") {
               return (
                 <IonCard className='IonCard'>
@@ -54,7 +75,7 @@ const List: React.FC = () => {
                     <IonTitle className='IonCardTitle'>Nombre: {dish.name}</IonTitle>
                     <IonCardSubtitle className='IonCardSubtitle'>Precio: {dish.price}</IonCardSubtitle>
                     <IonButton>Descripción</IonButton>
-                    <IonButton>Agregar al pedido</IonButton>
+                    <IonButton onClick={(e) => addDishToOrder(e, dish.id)}>Agregar al pedido</IonButton>
                   </IonCardHeader>
                 </IonCard>
               )
