@@ -12,8 +12,6 @@ const LoginForm: React.FC = () => {
 
   const { data, refetch } = ApiMethods(`${environment.apiEndPoint}/api/clients`);
 
-  const { postMethod } = ApiMethods(`${environment.apiEndPoint}/api/orders`);
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!data) {
@@ -24,11 +22,6 @@ const LoginForm: React.FC = () => {
         data?.map((client: any) => {
           if (client.email == email) {
             if (client.password == password) {
-              const body = {
-                state: 0,
-                client_id: client.id
-              }
-              postMethod(body);
               history.push(`/pages/List/${client.id}`);
               window.location.reload()
             }
@@ -42,7 +35,7 @@ const LoginForm: React.FC = () => {
 
   const handleRegistration = () => {
     history.push('/pages/RegistrationForm');
-    window.location.reload()
+    window.location.reload();
   }
 
   return (
