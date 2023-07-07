@@ -39,7 +39,7 @@ const RegistrationForm: React.FC = () => {
 
   }
 
-  const handleLogin = () => {
+  const handleRedirect = () => {
     history.push('/pages/LoginForm');
     window.location.reload()
   }
@@ -93,7 +93,7 @@ const RegistrationForm: React.FC = () => {
           <IonButton expand="full" type="submit" style={{marginTop: '20px'}}>
             Registrarse
           </IonButton>
-          <IonButton onClick={handleLogin} expand="full" style={{ marginTop: '20px' }}>Volver</IonButton>
+          <IonButton onClick={handleRedirect} expand="full" style={{ marginTop: '20px' }}>Volver</IonButton>
         </form>
       </IonContent>
     </IonPage>
