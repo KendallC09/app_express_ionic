@@ -14,9 +14,9 @@ const RegistrationForm: React.FC = () => {
   const [message, setMessage] = useState('');
   const history = useHistory();
 
-  const { postMethod } = ApiMethods(`${environment.apiEndPoint}/api/clients`);
+  const { postMethod, error } = ApiMethods(`${environment.apiEndPoint}/api/clients`);
 
-  const handleSubmit = (e: React.FormEvent) => { //validar si no se crea bien
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const body = {
       state: 0,
@@ -26,16 +26,20 @@ const RegistrationForm: React.FC = () => {
       email: email,
       password: password
     }
-    postMethod(body);
-    setMessage('Registro Completado!');
-    setFirstName('');
-    setLastName('');
-    setPhysicalAddress('');
-    setEmail('');
-    setPassword('');
+    try {
+      postMethod(body);
+      if (!error) {
 
-    history.push('/pages/LoginForm');
-    window.location.reload();
+        alert("se creo correctamente");
+        history.push('/pages/LoginForm');
+        window.location.reload();
+
+      } else {
+        alert("ocurrio un error");
+      }
+    } catch (err) {
+      console.log(err)
+    }
 
   }
 
@@ -48,7 +52,7 @@ const RegistrationForm: React.FC = () => {
     <IonPage>
       <IonContent>
         <h1>{message}</h1>
-        <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px'}}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
           <IonItem>
             <IonLabel position='floating'>Nombre</IonLabel>
             <IonInput
@@ -90,7 +94,7 @@ const RegistrationForm: React.FC = () => {
               required
             />
           </IonItem>
-          <IonButton expand="full" type="submit" style={{marginTop: '20px'}}>
+          <IonButton expand="full" type="submit" style={{ marginTop: '20px' }}>
             Registrarse
           </IonButton>
           <IonButton onClick={handleRedirect} expand="full" style={{ marginTop: '20px' }}>Volver</IonButton>
