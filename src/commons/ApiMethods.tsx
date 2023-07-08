@@ -20,22 +20,7 @@ function ApiMethods(url : any) {
       .finally(() => {setLoading(false)})
   }, [url])
 
-  const postMethod = (name: any, price: any) => {
-    const config = {
-      headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-      }
-    }
-
-    setLoading(true);
-    axios.post(url, { name: name, price: price }, config)
-      .then((response) => { setData(response.data) })
-      .catch((err) => { setError(err)})
-      .finally(() => { setLoading(false)})
-  }
-
-  const putMethod = (id: any, name: any, price: any) => {
+  const postMethod = (body: any) => {
     const config = {
       headers: {
         "Accept": "application/json",
@@ -44,7 +29,22 @@ function ApiMethods(url : any) {
     }
 
     setLoading(true);
-    axios.put(`${url}/${id}`, {name: name, price: price}, config)
+    axios.post(url, body, config)
+      .then((response) => { setData(response.data) })
+      .catch((err) => { setError(err) })
+      .finally(() => { setLoading(false) })
+  }
+
+  const putMethod = (id: number, body: any) => {
+    const config = {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    }
+
+    setLoading(true);
+    axios.put(`${url}/${id}`, body, config)
       .then((response) => {setData(response.data)})
       .catch((err) => {setError(err)})
       .finally(() => {setLoading(false)})

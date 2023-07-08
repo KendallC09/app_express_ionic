@@ -23,26 +23,14 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Lista Principal',
+    title: 'Menú',
     url: '/pages/List',
     iosIcon: heartOutline,
     mdIcon: heartSharp
   },
   {
-    title: 'Crear Producto',
-    url: '/pages/CreateForm',
-    iosIcon: listCircleOutline,
-    mdIcon: listCircleOutline
-  },
-  {
-    title: 'Editar Producto',
-    url: '/pages/EditForm',
-    iosIcon: listCircleOutline,
-    mdIcon: listCircleOutline
-  },
-  {
-    title: 'Eliminar Producto',
-    url: '/pages/DeleteForm',
+    title: 'Editar Datos Personales',
+    url: '/pages/EditClientForm',
     iosIcon: listCircleOutline,
     mdIcon: listCircleOutline
   }
@@ -55,8 +43,7 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Ionic 2023</IonListHeader>
-          <IonNote>Ionic Project</IonNote>
+          <IonListHeader>Menú Principal</IonListHeader>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
@@ -68,7 +55,6 @@ const Menu: React.FC = () => {
             );
           })}
         </IonList>
-
       </IonContent>
     </IonMenu>
   );

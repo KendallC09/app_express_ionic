@@ -1,0 +1,18 @@
+.IonCard {
+  background-color: lightblue;
+}
+
+.IonCardTitle {
+  color: darkblue;
+  text-align: center;
+  text-rendering: geometricPrecision;
+}
+
+.IonCardSubTitle {
+  color: rosybrown;
+  text-align: right;
+}
+
+.IonCard__Content {
+  color: red;
+}
