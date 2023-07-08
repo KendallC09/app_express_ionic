@@ -1,5 +1,5 @@
 export const environment = {
   
-  production: false,
-  apiEndPoint: "http://localhost:3000"
+  production: true,
+  apiEndPoint: "https://app-express-ruby-f347d3102517.herokuapp.com"
 }

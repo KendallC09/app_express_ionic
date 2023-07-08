@@ -24,8 +24,8 @@ const List: React.FC = () => {
   const history = useHistory();
   const { data: dishes } = ApiMethods(`${environment.apiEndPoint}/api/dishes`);
   const { data: orders } = ApiMethods(`${environment.apiEndPoint}/api/orders`);
-  const { postMethod: postDishes } = ApiMethods(`${environment.apiEndPoint}/api/order_dishes`);
-  const { postMethod: postOrder} = ApiMethods(`${environment.apiEndPoint}/api/orders`);
+  const { postMethod: postDishes, putMethod: putOrdersDishes  } = ApiMethods(`${environment.apiEndPoint}/api/order_dishes`);
+  const { postMethod: postOrder } = ApiMethods(`${environment.apiEndPoint}/api/orders`);
 
   const {clientId} = useParams<{ clientId: any }>();
 
@@ -46,6 +46,28 @@ const List: React.FC = () => {
     window.location.reload();
   }
 
+  const handleSendOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!orders) {
+      alert("No hay ordenes");
+    } else {
+      let ultimoId: number | undefined;
+      orders?.forEach((order_dish: any) => {
+        ultimoId = order_dish.id;
+      });
+      if (ultimoId !== undefined) {
+        const body = {
+          state: 1
+        }
+        putOrdersDishes(ultimoId, body)
+        alert("La orden se agregó correctamente")
+      } else {
+        alert("Algo salió mal")
+      }
+    }
+  };
+
   const addDishToOrder = async (e: React.FormEvent, dishId: any) => {
     e.preventDefault();
     if (!orders) {
@@ -54,9 +76,10 @@ const List: React.FC = () => {
       {orders?.map((order: any) => {
         if (order.client.id == clientId) {
           const body = {
-            state: 0,//si se envia en 0 la orden aun no esta lista
+            state: 0,
             order_id: order.id,
-            dish_id: dishId }
+            dish_id: dishId 
+          }
           postDishes(body);
           alert("Se agregó exitosamente")
         }
@@ -95,7 +118,7 @@ const List: React.FC = () => {
           <IonButton onClick={handleEditClient}>Editar Datos</IonButton>
           <IonButton onClick={createOrder}>Crear Orden</IonButton>
           <IonButton onClick={showOrder}>Ver Orden</IonButton>
-          <IonButton>Enviar Orden</IonButton>
+          <IonButton onclick={handleSendOrder}>Enviar Orden</IonButton>
           <IonButton onClick={handleLogout}>Cerrar Sesión</IonButton>
         </IonHeader>
         <IonContent>
