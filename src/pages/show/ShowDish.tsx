@@ -9,7 +9,8 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonButton
+  IonButton,
+  IonImg
 } from '@ionic/react';
 import ApiMethods from '../../commons/ApiMethods';
 import { environment } from '../../environments/environment.dev';
@@ -30,6 +31,7 @@ const ShowDish: React.FC = () => {
     <IonPage>
       <IonContent>
         {dishes?.map((dish: any) => {
+          console.log(dishes)
           if(dish.id == dishId){
             return (
               <IonCard className='IonCard'>
@@ -37,7 +39,11 @@ const ShowDish: React.FC = () => {
                   <IonTitle className='IonCardTitle'>{dish.name}</IonTitle>
                   <IonCardSubtitle className='IonCardSubtitle'>{dish.description}</IonCardSubtitle>
                   <IonCardSubtitle className='IonCardSubtitle'>Precio: {dish.price}</IonCardSubtitle>
+                  {dish.photo_url && (
+                      <IonImg src={dish.photo_url} alt='Foto del plato' className='IonCard'/>
+                  )}
                 </IonCardHeader>
+                
               </IonCard>
             )
           }
